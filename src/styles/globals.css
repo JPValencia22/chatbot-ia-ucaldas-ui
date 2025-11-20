@@ -1,0 +1,617 @@
+/* src/styles/globals.css */
+/* Estilos globales para el ChatBot IA - Universidad de Caldas */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   VARIABLES CSS DE SHADCN/UI
+   ============================================ */
+
+@layer base {
+  :root {
+    /* Background y Foreground */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    /* Card */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* Primary */
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Secondary */
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    /* Muted */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* Accent */
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    /* Destructive */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Border */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+
+    /* Radius */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* ============================================
+   ESTILOS PERSONALIZADOS PARA EL CHAT
+   ============================================ */
+
+/* Contenedor principal del chat */
+.chat-container {
+  @apply flex flex-col h-screen;
+}
+
+/* Área de mensajes con scroll personalizado */
+.chat-messages {
+  @apply flex-1 overflow-y-auto px-4 py-6 space-y-4;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar personalizado para el chat */
+.chat-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-scroll::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+  transition: background-color 0.2s;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Para Firefox */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(209 213 219) rgb(243 244 246);
+}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+
+/* Animación de typing para el indicador "escribiendo..." */
+@keyframes typing {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.typing-dot {
+  @apply inline-block w-2 h-2 bg-current rounded-full;
+  animation: typing 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Animación de fade in para mensajes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animación de pulse para indicador de carga */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animación de slide in desde la derecha (para panel de fuentes) */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/* Animación de bounce sutil */
+@keyframes subtleBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.subtle-bounce {
+  animation: subtleBounce 0.6s ease-in-out;
+}
+
+/* ============================================
+   ESTILOS PARA BURBUJAS DE MENSAJE
+   ============================================ */
+
+/* Burbuja de mensaje base */
+.message-bubble {
+  @apply max-w-3xl rounded-2xl px-4 py-3 shadow-sm;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Burbuja de mensaje del usuario */
+.message-bubble-user {
+  @apply bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-tr-sm;
+}
+
+/* Burbuja de mensaje del asistente */
+.message-bubble-assistant {
+  @apply bg-white border border-gray-200 text-gray-800 rounded-tl-sm;
+}
+
+/* Burbuja de mensaje del sistema (avisos/errores) */
+.message-bubble-system {
+  @apply bg-yellow-50 border border-yellow-200 text-yellow-900;
+}
+
+/* ============================================
+   ESTILOS PARA CITAS
+   ============================================ */
+
+/* Contenedor de citas */
+.citation-container {
+  @apply mt-4 pt-4 border-t border-gray-200 space-y-2;
+}
+
+/* Cita individual */
+.citation-item {
+  @apply bg-gray-50 rounded-lg p-3 border border-gray-200;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.citation-item:hover {
+  @apply border-indigo-300;
+  box-shadow: 0 1px 3px 0 rgba(79, 70, 229, 0.1);
+}
+
+/* Badge de score de similitud */
+.citation-score {
+  @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+  @apply bg-indigo-100 text-indigo-800;
+}
+
+/* ============================================
+   ESTILOS PARA PANEL DE FUENTES
+   ============================================ */
+
+/* Panel de fuentes */
+.sources-panel {
+  @apply fixed lg:relative right-0 top-0 h-full bg-white border-l border-gray-200 shadow-lg;
+  @apply transform transition-transform duration-300 ease-in-out z-50;
+}
+
+.sources-panel.open {
+  @apply translate-x-0;
+}
+
+.sources-panel.closed {
+  @apply translate-x-full lg:translate-x-0;
+}
+
+/* Tarjeta de fuente */
+.source-card {
+  @apply bg-white rounded-lg p-3 border border-gray-200;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.source-card:hover {
+  @apply shadow-md;
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   ESTILOS PARA INPUT Y BOTONES
+   ============================================ */
+
+/* Input del chat */
+.chat-input {
+  @apply w-full px-4 py-3 rounded-lg border border-gray-300;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply placeholder-gray-400 text-gray-900;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.chat-input:hover {
+  @apply border-gray-400;
+}
+
+/* Botón de enviar */
+.send-button {
+  @apply px-6 py-3 rounded-lg font-medium;
+  @apply bg-gradient-to-r from-blue-500 to-indigo-600;
+  @apply text-white shadow-sm;
+  @apply hover:from-blue-600 hover:to-indigo-700;
+  @apply active:scale-95;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  transition: all 0.2s;
+}
+
+/* Botón secundario */
+.secondary-button {
+  @apply px-4 py-2 rounded-lg font-medium;
+  @apply bg-gray-100 text-gray-700;
+  @apply hover:bg-gray-200;
+  @apply active:scale-95;
+  transition: all 0.2s;
+}
+
+/* ============================================
+   ESTILOS PARA BADGES Y TAGS
+   ============================================ */
+
+/* Badge base */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+/* Badge con citas */
+.badge-with-citations {
+  @apply bg-green-100 text-green-800;
+}
+
+/* Badge sin citas */
+.badge-no-citations {
+  @apply bg-gray-100 text-gray-800;
+}
+
+/* Badge de error */
+.badge-error {
+  @apply bg-red-100 text-red-800;
+}
+
+/* ============================================
+   ESTILOS PARA PANTALLA DE BIENVENIDA
+   ============================================ */
+
+/* Contenedor de bienvenida */
+.welcome-container {
+  @apply max-w-3xl mx-auto py-8 px-4;
+}
+
+/* Tarjeta de ejemplo de pregunta */
+.example-card {
+  @apply bg-white rounded-lg border border-gray-200 p-4;
+  @apply hover:border-blue-300 hover:bg-blue-50;
+  @apply cursor-pointer transition-all duration-200;
+  @apply active:scale-95;
+}
+
+.example-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+}
+
+/* ============================================
+   ESTILOS PARA ESTADOS DE CARGA
+   ============================================ */
+
+/* Skeleton loader */
+.skeleton {
+  @apply bg-gray-200 animate-pulse rounded;
+}
+
+.skeleton-text {
+  @apply skeleton h-4 w-full;
+}
+
+.skeleton-avatar {
+  @apply skeleton h-10 w-10 rounded-full;
+}
+
+/* Spinner de carga */
+.spinner {
+  @apply inline-block w-5 h-5 border-2 border-current border-t-transparent rounded-full;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   ESTILOS PARA TOOLTIPS
+   ============================================ */
+
+/* Tooltip base */
+.tooltip {
+  @apply absolute z-50 px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm;
+  @apply invisible opacity-0 transition-opacity duration-200;
+}
+
+.tooltip-trigger:hover .tooltip {
+  @apply visible opacity-100;
+}
+
+/* Flecha del tooltip */
+.tooltip-arrow {
+  @apply absolute w-2 h-2 bg-gray-900 rotate-45;
+}
+
+/* ============================================
+   UTILIDADES PERSONALIZADAS
+   ============================================ */
+
+/* Truncate con número de líneas */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Gradiente de texto */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-600;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE FIRST
+   ============================================ */
+
+/* Ajustes para móviles pequeños */
+@media (max-width: 640px) {
+  .message-bubble {
+    @apply max-w-full;
+  }
+
+  .chat-messages {
+    @apply px-2 py-4;
+  }
+
+  .sources-panel {
+    @apply w-full;
+  }
+}
+
+/* Ajustes para tablets */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .sources-panel {
+    @apply w-80;
+  }
+}
+
+/* Ajustes para desktop */
+@media (min-width: 1025px) {
+  .sources-panel {
+    @apply w-96;
+  }
+
+  .chat-messages {
+    @apply px-6 py-8;
+  }
+}
+
+/* ============================================
+   MODO OSCURO (OPCIONAL - PARA FUTURO)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  /* Puedes descomentar estas reglas si implementas modo oscuro */
+  
+  /* .dark .chat-input {
+    @apply bg-gray-800 border-gray-700 text-white placeholder-gray-500;
+  }
+
+  .dark .message-bubble-assistant {
+    @apply bg-gray-800 border-gray-700 text-gray-100;
+  }
+
+  .dark .source-card {
+    @apply bg-gray-800 border-gray-700;
+  } */
+}
+
+/* ============================================
+   ACCESIBILIDAD
+   ============================================ */
+
+/* Focus visible para navegación por teclado */
+*:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* Reducir movimiento para usuarios con preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mejorar contraste para texto */
+.high-contrast {
+  @apply text-gray-900 dark:text-white;
+  font-weight: 500;
+}
+
+/* ============================================
+   PRINT STYLES (para exportar conversaciones)
+   ============================================ */
+
+@media print {
+  .chat-input,
+  .send-button,
+  .sources-panel,
+  .secondary-button {
+    @apply hidden;
+  }
+
+  .message-bubble {
+    @apply shadow-none border border-gray-300;
+    page-break-inside: avoid;
+  }
+
+  .chat-messages {
+    @apply overflow-visible;
+  }
+}
+
+/* ============================================
+   PERSONALIZACIONES ESPECÍFICAS
+   ============================================ */
+
+/* Colores de la Universidad de Caldas (ajustar según branding) */
+:root {
+  --ucaldas-primary: #1e40af; /* Azul Universidad */
+  --ucaldas-secondary: #7c3aed; /* Púrpura Universidad */
+  --ucaldas-accent: #0891b2; /* Cyan Universidad */
+}
+
+/* Aplicar colores de la universidad */
+.ucaldas-primary {
+  background-color: var(--ucaldas-primary);
+}
+
+.ucaldas-text-primary {
+  color: var(--ucaldas-primary);
+}
+
+/* ============================================
+   MEJORAS DE UX
+   ============================================ */
+
+/* Suavizar selección de texto */
+::selection {
+  @apply bg-blue-200 text-blue-900;
+}
+
+::-moz-selection {
+  @apply bg-blue-200 text-blue-900;
+}
+
+/* Cursor personalizado para elementos interactivos */
+.interactive {
+  @apply cursor-pointer;
+  user-select: none;
+}
+
+/* Deshabilitar selección de texto en UI elements */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* ============================================
+   FIN DEL ARCHIVO
+   ============================================ */
