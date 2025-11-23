@@ -2,20 +2,11 @@
 // Pantalla de bienvenida con ejemplos de preguntas
 
 import React from 'react';
-import { Sparkles, BookOpen, History, Brain, Cpu, Scale, Rocket } from 'lucide-react';
+import { Sparkles, BookOpen } from 'lucide-react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import type { WelcomeScreenProps } from '../../types/chat.types';
 import { EXAMPLE_QUESTIONS } from '../../types/chat.types';
-
-const categoryIcons: Record<string, React.ReactNode> = {
-  'Conceptos Básicos': <Brain className="w-5 h-5" />,
-  'Historia': <History className="w-5 h-5" />,
-  'Machine Learning': <Cpu className="w-5 h-5" />,
-  'Deep Learning': <Sparkles className="w-5 h-5" />,
-  'Ética y Regulación': <Scale className="w-5 h-5" />,
-  'Aplicaciones': <Rocket className="w-5 h-5" />,
-};
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onExampleClick }) => {
   return (

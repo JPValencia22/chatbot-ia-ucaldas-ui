@@ -5,7 +5,6 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import {
   ChatState,
   Message,
-  MessageRole,
   ResponseMode,
   Citation,
   MessageMetadata,
@@ -269,23 +268,23 @@ export const selectHasMessages = (state: { chat: ChatState }) =>
 export const selectChatStats = (state: { chat: ChatState }) => {
   const messages = state.chat.messages;
   const assistantMessages = messages.filter((msg) => msg.role === 'assistant');
-  
+
   const totalTokens = assistantMessages.reduce(
     (sum, msg) => sum + (msg.metadata?.tokens_consumidos || 0),
     0
   );
-  
+
   const avgLatency = assistantMessages.length > 0
     ? assistantMessages.reduce(
-        (sum, msg) => sum + (msg.metadata?.latencia_ms || 0),
-        0
-      ) / assistantMessages.length
+      (sum, msg) => sum + (msg.metadata?.latencia_ms || 0),
+      0
+    ) / assistantMessages.length
     : 0;
-  
+
   const messagesWithCitations = assistantMessages.filter(
     (msg) => msg.citations && msg.citations.length > 0
   ).length;
-  
+
   return {
     totalMessages: messages.length,
     userMessages: messages.filter((msg) => msg.role === 'user').length,

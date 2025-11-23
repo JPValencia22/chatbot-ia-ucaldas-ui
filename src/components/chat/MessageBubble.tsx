@@ -2,7 +2,7 @@
 // Componente para burbujas de mensaje individuales
 
 import React from 'react';
-import { User, Bot, Info, AlertCircle } from 'lucide-react';
+import { User, Bot, Info } from 'lucide-react';
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { CitationDisplay } from './CitationDisplay';

@@ -21,7 +21,7 @@ export const CitationDisplay: React.FC<CitationDisplayProps> = ({ citations }) =
       </div>
 
       <div className="space-y-2">
-        {citations.map((citation, index) => (
+        {citations.map((citation) => (
           <div
             key={`${citation.doc_nombre}-${citation.chunk_index}`}
             className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-indigo-300 transition-colors"

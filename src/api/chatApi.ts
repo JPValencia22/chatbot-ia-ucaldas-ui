@@ -2,16 +2,15 @@
 // API para interactuar con workflows de N8N
 
 import axios, { AxiosInstance, AxiosError } from 'axios';
-import type { 
-  ChatRequest, 
-  ChatResponse, 
-  ChatError, 
-  ChatErrorType,
-  ConversationHistoryItem 
+import {
+  ChatRequest,
+  ChatResponse,
+  ChatError,
+  ConversationHistoryItem,
+  ChatErrorType
 } from '../types/chat.types';
-import type { 
-  ConsultaRAGResponse, 
-  N8N_TIMEOUTS 
+import type {
+  ConsultaRAGResponse
 } from '../types/n8n.types';
 
 /**
@@ -71,14 +70,14 @@ const n8nClient = createN8NClient();
  */
 const getWebhookURL = (): string => {
   const url = import.meta.env.VITE_N8N_WEBHOOK_URL;
-  
+
   if (!url) {
     throw new Error(
       'VITE_N8N_WEBHOOK_URL no está configurada en las variables de entorno. ' +
       'Por favor, agrega esta variable en tu archivo .env'
     );
   }
-  
+
   return url;
 };
 
@@ -95,9 +94,9 @@ const transformAxiosError = (error: AxiosError): ChatError => {
   } else if (error.response) {
     // El servidor respondió con un código de error
     errorType = ChatErrorType.SERVER_ERROR;
-    message = `Error del servidor (${error.response.status}): ${
-      error.response.data?.error || 'Error desconocido'
-    }`;
+    const errorData = error.response.data as { error?: string };
+    message = `Error del servidor (${error.response.status}): ${errorData?.error || 'Error desconocido'
+      }`;
   } else if (error.request) {
     // La petición se hizo pero no hubo respuesta
     errorType = ChatErrorType.NETWORK_ERROR;
@@ -139,7 +138,7 @@ const buildConversationHistory = (
 ): ConversationHistoryItem[] => {
   // Solo incluir últimos 10 mensajes para no exceder límites
   const recentMessages = messages.slice(-10);
-  
+
   return recentMessages.map((msg) => ({
     rol: msg.role as 'user' | 'assistant' | 'system',
     contenido: msg.content,
@@ -355,7 +354,7 @@ export const getUsageStats = async (): Promise<{
 } | null> => {
   try {
     const statsURL = import.meta.env.VITE_N8N_STATS_URL;
-    
+
     if (!statsURL) {
       console.warn('VITE_N8N_STATS_URL no configurada');
       return null;
